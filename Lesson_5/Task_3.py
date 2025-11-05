@@ -2,32 +2,35 @@ from time import sleep
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.firefox.service import Service as FirefoxService
+from webdriver_manager.firefox import GeckoDriverManager
 from selenium.webdriver.common.by import By
 
 
-driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
 
-#Открыть сайт
-driver.get("http://the-internet.herokuapp.com/add_remove_elements/")
+def browser(driver):
+    driver.get("http://the-internet.herokuapp.com/add_remove_elements/") #Открыть сайт
 
-#Присвоили локутору "Add_Element" переменную
-Add_Element_locator = 'button'
+    Add_Element_locator = 'button' #Присвоили локутору "Add_Element" переменную
 
-#Поиск локатора "Add_Element" на сайте
-serch_Add_Element_locator = driver.find_element(By.CSS_SELECTOR, Add_Element_locator)
+    serch_Add_Element_locator = driver.find_element(By.CSS_SELECTOR, Add_Element_locator)#Поиск локатора "Add_Element" на сайте
 
-#5 раз кликнуть на кнопку "Add Element"
-for x in range(5):
-    serch_Add_Element_locator.click()
+    for x in range(5):
+        serch_Add_Element_locator.click()#5 раз кликнуть на кнопку "Add Element"
 
-#Присволи локатору "Delete" переменную
-delete_locator = '.added-manually'
+    delete_locator = '.added-manually'#Присволи локатору "Delete" переменную
 
-#Поиск локатора "Delete" на сайте
-delete_buttons = driver.find_elements(By.CSS_SELECTOR, delete_locator)
+    delete_buttons = driver.find_elements(By.CSS_SELECTOR, delete_locator) #Поиск локатора "Delete" на сайте
 
-#Вывод размера списка 
-print (len(delete_buttons))
+    print (len(delete_buttons)) #Вывод размера списка 
 
-#Задержка на 10 сек
-sleep(10)
+    sleep(10) #Задержка на 10 сек
+
+
+chrome = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
+firefox = webdriver.Firefox(service=FirefoxService(GeckoDriverManager().install()))
+
+browser(chrome)
+browser(firefox)
+
+
